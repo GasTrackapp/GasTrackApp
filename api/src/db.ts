@@ -8,7 +8,7 @@ let sequelize = config.dev === true ? new Sequelize({
     password: config.dbPassword,
     username: config.dbUser,
     storage: ':memory:',
-    models: [__dirname + '/models'],
+    models: [__dirname + '/models', __dirname + '/models/through_tables'],
     logging: false,
     native: false
     }) : new Sequelize({

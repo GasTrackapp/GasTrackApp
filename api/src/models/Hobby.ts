@@ -4,20 +4,18 @@ import {
     Model,
     CreatedAt,
     UpdatedAt,
-    DeletedAt,
     PrimaryKey,
     AutoIncrement,
     AllowNull,
-    ForeignKey,
-    BelongsTo,
+    BelongsToMany
 } from 'sequelize-typescript';
 
 import User from './User';
+import UserHobby from './through_tables/UserHobby';
 
 @Table({
     tableName: 'hobby',
     timestamps: true,
-    paranoid: true
 })
 export class Hobby extends Model<Hobby> {
 
@@ -38,16 +36,8 @@ export class Hobby extends Model<Hobby> {
     @Column
     updatedAt?: Date;
 
-    @DeletedAt
-    @Column
-    deletedAt?: Date;
-
-    @ForeignKey(() => User)
-    @Column
-    userId?: number;
-
-    @BelongsTo(() => User)
-    user?: User;
+    @BelongsToMany(() => User, () => UserHobby)
+    users?: User[];
 }
 
 export default Hobby;

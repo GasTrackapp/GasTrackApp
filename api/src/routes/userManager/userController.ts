@@ -1,12 +1,17 @@
 import { User } from '../../models/User';
+import { Hobby } from '../../models/Hobby';
 
 export default class UserController {
     
     async getAllUsers(): Promise<User[]> {
         
-        //traigo a todos los usuarios a excepcion de los timestamps
         const users = await User.findAll({
-            attributes: { exclude: ['createdAt', 'updatedAt'] }
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+            include: [
+                {
+                    model: Hobby
+                },
+            ],
         });
         return users;
     }

@@ -4,20 +4,13 @@ import {
     Model,
     CreatedAt,
     UpdatedAt,
-    HasMany,
     PrimaryKey,
     AutoIncrement,
     AllowNull,
-    DeletedAt,
+    BelongsToMany,
 } from 'sequelize-typescript';
 import Hobby from './Hobby';
-
-enum Role {
-    ADMIN = 'ADMIN',
-    DRIVER = 'DRIVER',
-    ASSISTANT = 'ASSISTANT',
-    AUXILIARY = 'AUXILIARY',
-}
+import UserHobby from './through_tables/UserHobby';
 
 @Table({
     tableName: 'users',
@@ -66,8 +59,8 @@ export class User extends Model<User> {
     @Column
     updatedAt?: Date;
 
-    @HasMany(() => Hobby)
-    hobbies?: Hobby[];
+    @BelongsToMany(() => Hobby, () => UserHobby)
+    hobbies?: Array<Hobby & { UserHobby: UserHobby }>;
 }
 
 export default User;

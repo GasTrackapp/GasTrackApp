@@ -5,12 +5,24 @@ import {
     CreatedAt,
     UpdatedAt,
     PrimaryKey,
+    ForeignKey,
     AutoIncrement,
     AllowNull,
     BelongsToMany,
+    BelongsTo
 } from 'sequelize-typescript';
-import Hobby from './Hobby';
-import UserHobby from './through_tables/UserHobby';
+import Hobby from '../Hobby';
+import Distributor from './Distributor';
+import Admin from './Admin';
+import Driver from './Driver';
+import Auxiliar from './Auxiliar';
+import UserHobby from '../through_tables/UserHobby';
+
+enum Rol {
+    ADMIN = 'admin',
+    DRIVER = 'driver',
+    AUXILIAR = 'auxiliar'
+}
 
 @Table({
     tableName: 'users',
@@ -51,6 +63,14 @@ export class User extends Model<User> {
     @Column
     online?: boolean;
 
+    @AllowNull(false)
+    @Column
+    rol?: Rol;
+
+    @AllowNull(false)
+    @Column
+    distributor_name?: string;
+
     @CreatedAt
     @Column
     createdAt?: Date;
@@ -61,6 +81,34 @@ export class User extends Model<User> {
 
     @BelongsToMany(() => Hobby, () => UserHobby)
     hobbies?: Array<Hobby & { UserHobby: UserHobby }>;
+
+    @ForeignKey(() => Distributor)
+    @Column
+    distributor_id?: number;
+
+    @BelongsTo(() => Distributor)
+    distributor?: Distributor;
+
+    @ForeignKey(() => Admin)
+    @Column
+    admin_id?: number;
+
+    @BelongsTo(() => Admin)
+    admin?: Admin;
+
+    @ForeignKey(() => Driver)
+    @Column
+    driver_id?: number;
+
+    @BelongsTo(() => Driver)
+    driver?: Driver;
+
+    @ForeignKey(() => Auxiliar)
+    @Column
+    auxiliar_id?: number;
+
+    @BelongsTo(() => Auxiliar)
+    auxiliar?: Auxiliar;
 }
 
 export default User;

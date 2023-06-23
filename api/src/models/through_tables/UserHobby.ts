@@ -1,5 +1,5 @@
 import { Table, Column, Model, ForeignKey } from 'sequelize-typescript';
-import User from '../User';
+import User from '../personal_models/User';
 import Hobby from '../Hobby';
 
 @Table({

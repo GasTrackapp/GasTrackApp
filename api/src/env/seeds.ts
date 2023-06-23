@@ -14,6 +14,8 @@ export const seedUsers = async () => {
             rut: '123456789',
             state : true,
             online: false,
+            rol: 'admin',
+            distributor_name: 'Distribuidora Jhoskar',
         },
         {
             name: 'Miguel',
@@ -23,6 +25,8 @@ export const seedUsers = async () => {
             rut: '123456789',
             state : true,
             online: false,
+            rol: 'driver',
+            distributor_name: 'Distribuidora Miguel',
         }
     ];
 

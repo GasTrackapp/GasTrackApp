@@ -1,4 +1,4 @@
-import { User } from '../../models/User';
+import { User } from '../../models/personal_models/User';
 import { Hobby } from '../../models/Hobby';
 
 export default class UserController {

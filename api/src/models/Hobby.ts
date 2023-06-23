@@ -10,7 +10,7 @@ import {
     BelongsToMany
 } from 'sequelize-typescript';
 
-import User from './User';
+import User from './personal_models/User';
 import UserHobby from './through_tables/UserHobby';
 
 @Table({

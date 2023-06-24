@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {Sequelize} from 'sequelize-typescript';
 import config from './lib/config';
 config;
@@ -41,4 +42,54 @@ let sequelize = config.dev === true ? new Sequelize({
 //exporto sequelize en un objeto para poder usarlo en otros archivos
 export const connection = sequelize;
 export const models = sequelize.models;
+=======
+import {Sequelize} from 'sequelize-typescript';
+import config from './lib/config';
+config;
+
+let sequelize = config.dev === true ? new Sequelize({
+    dialect: 'postgres',
+    database: config.dbName,
+    password: config.dbPassword,
+    username: config.dbUser,
+    storage: ':memory:',
+    models: [
+        __dirname + '/models',
+        __dirname + '/models/through_tables',
+        __dirname + '/models/personal_models',
+        __dirname + '/models/order_models',
+    ],
+    logging: false,
+    native: false
+    }) : new Sequelize({
+        dialect: 'postgres',
+        database: config.dbName,
+        password: config.dbPassword,
+        username: config.dbUser,
+        host: config.dbHost,
+        port: Number(config.dbPort),
+        models: [__dirname + '/models'],
+        dialectOptions: {
+            ssl: {
+                require: true,
+                rejectUnauthorized: false
+            }, 
+            keepAlive: true
+        },
+        ssl : true,
+        logging: false,
+        native: false,
+        pool: {
+            max: 5,
+            min: 0,
+            idle: 300000,
+            acquire: 300000,
+        },
+        benchmark: true,
+    });
+
+//exporto sequelize en un objeto para poder usarlo en otros archivos
+export const connection = sequelize;
+export const models = sequelize.models;
+>>>>>>> origin/master
 export default sequelize;

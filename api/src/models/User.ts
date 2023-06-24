@@ -39,7 +39,9 @@ export class User extends Model<User> {
     lastname?: string;
 
     @AllowNull(false)
-    @Column
+    @Column({
+        unique: true, // Declarar el campo como único
+      })
     email?: string;
 
     @AllowNull(false)

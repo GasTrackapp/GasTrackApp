@@ -1,5 +1,5 @@
 import { where } from 'sequelize';
-import { User } from '../../models/User';
+import { User } from '../../models/personal_models/User';
 import { Response, Request, NextFunction } from 'express';
 import { hashPassword } from '../../utils/hashPassword';
 import { authenticate } from '../../utils/auth'

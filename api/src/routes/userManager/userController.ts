@@ -1,7 +1,8 @@
 import { where } from 'sequelize';
 import { User } from '../../models/personal_models/User';
 import { Response, Request, NextFunction } from 'express';
-import { hashPassword } from '../../utils/hashPassword';
+import { comparePassword, hashPassword } from '../../utils/hashPassword';
+import { createJWT } from '../../utils/jwt';
 
 export default class UserController {
     
@@ -47,12 +48,24 @@ export default class UserController {
     ) => {
         const { email, password } = req.body;
         try {
-            //const token = await authenticate(email, password)
-            //console.log('token', token)
-            //return res.status(200).json({ token, message: 'User login successfully' });
+            const user: User|null = await User.findOne({ where: {email}});
+            if (user && user.password) {
+                const isCorrectPassword = comparePassword(password, user.password);
+                if (isCorrectPassword) {
+                    const token = createJWT({
+                        id: user.id,
+                        name: user.name,
+                        rol: user.rol
+                    });
+                    return res.status(200).json({ token, message: 'User login successfully' });
+                } else{
+                    return res.status(401).json({ message: 'Invalid password' });
+                }
+            } else{
+                return res.status(401).json({ message: 'Invalid email' });
+            }
         } catch (error) {
-            return res.status(500).json({ message: 'Error login user', error });
+            console.error('Authentication error:', error);
         }
-        
     }
 }

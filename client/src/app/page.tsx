@@ -13,7 +13,7 @@ export default function Home() {
     <div>
       <h1>Home</h1>
       {
-        data?.map((user) => (
+        data && data.map((user) => (
           <div key={user.id}>
             <h2>{user.name}</h2>
             <p>{user.lastname}</p>

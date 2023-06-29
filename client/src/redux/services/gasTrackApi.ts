@@ -11,11 +11,11 @@ export const gasTrackApi = createApi({
     }),
     endpoints: (builder) => ({
         getGasTrackUsers: builder.query<GasTrackUsers[], void>({
-            query: () => 'api/user',
+            query: () => 'api/user'
         }),
         getGasTrackUserById: builder.query<GasTrackUsers, number>({
             query: (id) => `api/user/${id}`,
-        }),
+        })
     }),
 });
 
